@@ -1,9 +1,8 @@
 {
   "expo": {
-    "name": "faceup",
-    "slug": "faceup",
+    "name": "faceup-part2",
+    "slug": "faceup-part2",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",

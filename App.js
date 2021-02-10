@@ -1,13 +1,15 @@
-console.disableYellowBox = true;
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+
 import React from 'react';
 
 import HomeScreen from './screens/HomeScreen';
 import SnapScreen from './screens/SnapScreen';
 import GalleryScreen from './screens/GalleryScreen';
 
-import {createAppContainer } from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -17,47 +19,48 @@ import pictureUrlList from './reducers/picture';
 
 const store = createStore(combineReducers({pictureUrlList}));
 
-var BottomNavigator = createBottomTabNavigator({
-  Gallery: GalleryScreen,
-  Snap: SnapScreen
-},
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        var iconName;
-        if (navigation.state.routeName == 'Snap') {
-          iconName = 'ios-camera';
-        } else if (navigation.state.routeName == 'Gallery') {
-          iconName = 'md-photos';
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const BottomNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color }) => {
+          let iconName;
+
+          if (route.name == 'Snap') {
+            iconName = 'ios-camera';
+          } else if (route.name == 'Gallery') {
+            iconName = 'ios-images';
+          }
+  
+          return <Ionicons name={iconName} size={25} color={color} />;
+        },
+        })}
+      tabBarOptions={{
+        activeTintColor: '#009788',
+        inactiveTintColor: '#FFFFFF',
+        style: {
+          backgroundColor: '#111224',
         }
-
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: '#009788',
-      inactiveTintColor: '#FFFFFF',
-      style: {
-        backgroundColor: '#111224',
-      }
-    }  
-   
-  
-  });
-  
-StackNavigator = createStackNavigator({ 
-  Home:  HomeScreen,  
-  BottomNavigator: BottomNavigator
-}, 
-{headerMode: 'none'}
-);   
-
-const Navigation = createAppContainer(StackNavigator);
+      }}
+    >
+      <Tab.Screen name="Snap" component={SnapScreen} />
+      <Tab.Screen name="Gallery" component={GalleryScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   return (
     <Provider store={store}>
-      <Navigation />
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
- }
+}

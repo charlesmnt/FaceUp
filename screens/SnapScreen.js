@@ -1,33 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import {Button, Overlay} from 'react-native-elements';
+import React, { useState, useEffect, useRef} from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
+import { Camera } from 'expo-camera';
+import { useIsFocused } from '@react-navigation/native';
+
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconIonic from 'react-native-vector-icons/Ionicons';
 
-import { Camera } from 'expo-camera';
-
-import { withNavigationFocus } from 'react-navigation';
+import {Button, Overlay} from 'react-native-elements';
 
 import {connect} from 'react-redux';
 
 function SnapScreen(props) {
-  
+
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.torch);
-  
-  var camera = useRef(null);
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => { 
+  var camera = useRef(null);
+ 
+  const isFocused = useIsFocused();
+
+  useEffect(() => {  
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+        const { status } = await Camera.requestPermissionsAsync();
+        setHasPermission(status === 'granted');
     })();
   }, []);
-
-  var cameraDisplay
-   if(hasPermission && props.isFocused) {
+  
+  var cameraDisplay;
+  if(hasPermission && isFocused){
     cameraDisplay = <Camera style={{ flex: 1 }} 
     type={type}
     flashMode={flash}
@@ -138,10 +140,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-var SnapScreenRedux = connect(
+export default connect(
     null, 
     mapDispatchToProps
 )(SnapScreen);
-
-export default withNavigationFocus(SnapScreenRedux);
-

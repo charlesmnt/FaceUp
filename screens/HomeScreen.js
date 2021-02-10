@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {connect} from 'react-redux';
 
-function HomeScreen({ navigation, onSubmitPseudo }) {
+function HomeScreen(props) {
     const [pseudo, setPseudo] = useState('');
     
     return (
@@ -31,7 +31,7 @@ function HomeScreen({ navigation, onSubmitPseudo }) {
             title="Go to gallery"
             type="solid"
             buttonStyle={{backgroundColor: "#009788"}}
-            onPress={() => {onSubmitPseudo(pseudo); navigation.navigate('Gallery')}}
+            onPress={() => {props.onSubmitPseudo(pseudo); props.navigation.navigate('BottomNavigator', {screen: 'Gallery'})}}
         />
 
     
@@ -57,6 +57,6 @@ function mapDispatchToProps(dispatch) {
   }
   
   export default connect(
-      null, 
-      mapDispatchToProps
+    null, 
+    mapDispatchToProps
   )(HomeScreen);
