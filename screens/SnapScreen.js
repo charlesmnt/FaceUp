@@ -55,7 +55,7 @@ function SnapScreen(props) {
             );
           }}>
            <IconIonic
-                name="md-reverse-camera"
+                name="camera-reverse"
                 size={20}
                 color="#ffffff"
             /><Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
@@ -98,7 +98,7 @@ function SnapScreen(props) {
             onPress={async () => {
               setVisible(true);
               if (camera) {
-                let photo = await camera.takePictureAsync({quality : 0.7});              
+                let photo = await camera.takePictureAsync({quality : 0.3});              
                 var data = new FormData();
                 data.append('avatar', {
                   uri: photo.uri,
