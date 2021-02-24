@@ -8,7 +8,7 @@ function GalleryScreen(props) {
 
   let cardList = props.pictureUrlList.map((url, i)=> {
     return (
-      <Card>
+      <Card key={i}>
         <Card.Image
           style={{ width: '100%', height: 170, marginBottom: 10 }}
           source={{ uri: url }}
@@ -20,8 +20,7 @@ function GalleryScreen(props) {
         <Badge status="success" value="cheveux gris"/>
       </Card>
     );
-  }
-  );
+  });
 
   return (
     <ScrollView style={{marginTop: 25}}>
