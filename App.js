@@ -13,11 +13,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Ionicons } from '@expo/vector-icons';
 
-import {createStore, combineReducers} from 'redux';
-import {Provider} from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
 import pictureUrlList from './reducers/picture';
+import pseudo from './reducers/pseudo';
 
-const store = createStore(combineReducers({pictureUrlList}));
+const store = createStore(combineReducers({ pictureUrlList, pseudo }));
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,10 +35,10 @@ const BottomNavigator = () => {
           } else if (route.name == 'Gallery') {
             iconName = 'ios-images';
           }
-  
+
           return <Ionicons name={iconName} size={25} color={color} />;
         },
-        })}
+      })}
       tabBarOptions={{
         activeTintColor: '#009788',
         inactiveTintColor: '#FFFFFF',
@@ -56,7 +57,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
         </Stack.Navigator>
