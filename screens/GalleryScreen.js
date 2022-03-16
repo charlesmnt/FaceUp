@@ -11,10 +11,10 @@ function GalleryScreen(props) {
       <Card key={i}>
         <Card.Image
           style={{ width: '100%', height: 170, marginBottom: 10 }}
-          source={{ uri: url }}
+          source={{ uri: url.url }}
         />
-        <Badge status="success" value="homme" />
-        <Badge status="success" value="70 ans" />
+        <Badge status="success" value={url.IAresult[0].gender} />
+        <Badge status="success" value={url.IAresult[0].age} />
         <Badge status="success" value="barbe" />
         <Badge status="success" value="joyeux !" />
         <Badge status="success" value="cheveux gris" />
@@ -34,7 +34,7 @@ function GalleryScreen(props) {
 }
 
 function mapStateToProps(state) {
-  return { pictureUrlList: state.pictureUrlList, pseudo: state.pseudo }
+  return { pictureUrlList: state.pictureUrlList, pseudo: state.pseudo, IAresult: state.IAresult }
 }
 
 export default connect(

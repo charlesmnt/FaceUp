@@ -17,8 +17,9 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import pictureUrlList from './reducers/picture';
 import pseudo from './reducers/pseudo';
+import IAresult from './reducers/IA';
 
-const store = createStore(combineReducers({ pictureUrlList, pseudo }));
+const store = createStore(combineReducers({ pictureUrlList, pseudo, IAresult }));
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

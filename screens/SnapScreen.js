@@ -14,7 +14,7 @@ function SnapScreen(props) {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [flash, setFlash] = useState(Camera.Constants.FlashMode.torch);
+  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const [visible, setVisible] = useState(false);
 
   var camera = useRef(null);
@@ -69,9 +69,9 @@ function SnapScreen(props) {
           }}
           onPress={() => {
             setFlash(
-              flash === Camera.Constants.FlashMode.torch
-                ? Camera.Constants.FlashMode.off
-                : Camera.Constants.FlashMode.torch
+              flash === Camera.Constants.FlashMode.off
+                ? Camera.Constants.FlashMode.torch
+                : Camera.Constants.FlashMode.off
             );
           }}>
           <IconFontAwesome
@@ -106,12 +106,14 @@ function SnapScreen(props) {
               name: 'avatar.jpg',
             });
 
-            var rawResponse = await fetch("http://IP_BACKEND:3000/upload", {
+            var rawResponse = await fetch("http://192.168.1.38:3000/upload", {
               method: 'POST',
               body: data
             });
             var response = await rawResponse.json();
-            props.onSnap(response.url);
+            console.log(response.resultDetection.detectedFaces)
+            props.onSnap(response.resultCloudinary.url, response.resultDetection.detectedFaces );
+            props.submitIA(response.resultDetection.detectedFaces);
             setVisible(false);
           }
         }}
@@ -134,8 +136,11 @@ function SnapScreen(props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSnap: function (url) {
-      dispatch({ type: 'addPicture', url })
+    onSnap: function (url, IAdata) {
+      dispatch({ type: 'addPicture', url, IAdata })
+    },
+    submitIA: function (IAdata) {
+      dispatch({ type: 'IAdetection', IAdata })
     }
   }
 }
