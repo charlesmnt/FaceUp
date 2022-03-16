@@ -7,9 +7,9 @@ var request = require('sync-request');
 
 var cloudinary = require('cloudinary').v2;
 cloudinary.config({ 
-  cloud_name: 'drajlbdf4', 
-  api_key: '622945721282649', 
-  api_secret: 'g_YM9aF1-LoEqPEL_tIYmOUnRVg' 
+  cloud_name: '', 
+  api_key: '', 
+  api_secret: '' 
 });
 
 /* GET home page. */
@@ -28,7 +28,7 @@ router.post('/upload', async function(req, res, next) {
     
     var options = {
       json: {
-        apiKey: "5c0a5d392c1745d2ae84dc0b1483bfd2",
+        apiKey: "",
         image: resultCloudinary.url,
       },
     };
