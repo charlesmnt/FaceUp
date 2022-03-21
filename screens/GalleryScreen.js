@@ -25,7 +25,7 @@ function GalleryScreen(props) {
   return (
     <ScrollView style={{ marginTop: 25 }}>
 
-      <Text h4 style={{ textAlign: 'center' }}>{props.pseudo}'s Gallery</Text>
+      <Text h4 style={{ textAlign: 'center' }}>{props.pseudo}'s Gallery !</Text>
 
       {cardList}
 
